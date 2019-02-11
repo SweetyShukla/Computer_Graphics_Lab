@@ -1,0 +1,79 @@
+#include<GL/Glut.h>
+#include<stdlib.h>
+#include<math.h>
+
+void myinit(void)
+{
+ 
+        glClearColor(1.0,1.0,1.0,0.0);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluOrtho2D (0.0,640.0,0.0,480.0);
+ }
+ 
+float xstart=10 ,ystart=100,xend=400,yend=10,x,y;
+
+int Round(float a)//any x i.e 1>=a>=0.5 is rounded to 1
+{
+  if(a-int(a)>=0.5)
+  return int(a)+1;
+  else
+  return int(a);
+     }
+
+void bressen()
+     {  
+       float ydiff = yend-ystart;
+       float xdiff = xend-xstart;  
+      
+        float p0;
+         p0 = 2*(xdiff)-ydiff;
+          
+        x = xstart;              
+        y = ystart;            
+
+while ((x != xend+1)&&(y != yend+1))
+      {  
+       glBegin(GL_POINTS);
+       glVertex2i(x,y);
+           glEnd();
+if (p0<0)  
+       {
+                x = x;
+                y = y+1;
+                p0=p0+2*(xdiff);
+       }
+       else
+       {
+         x=x+1;
+         y=y+1;
+         p0=p0+2*(xdiff)-(ydiff);
+       }
+ 
+}
+  
+  glutPostRedisplay();
+  }
+      
+void display(void)
+{  
+    
+    glClear(GL_COLOR_BUFFER_BIT);    
+    glColor3f(0,0,0);
+    glPointSize(6);
+    bressen();
+    glFlush();
+}
+
+int main(int argc,char** argv)
+{
+        glutInit(&argc,argv);
+    glutInitWindowSize(640,480);
+    glutInitWindowPosition(10,10);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutCreateWindow("Bressenham Line Drawing");
+        myinit();
+        glutDisplayFunc(display);
+    glutIdleFunc(bressen);
+    glutMainLoop();
+}

@@ -20,272 +20,261 @@ void render()
 
 void myInit(void)
 {
-	glClearColor(0,0,0,1);
-	glColor3f(1,1,0);
+	glClearColor(0, 0, 0, 1);
+	glColor3f(1, 1, 0);
 
 	glPointSize(1.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	gluOrtho2D(-780,780,-420,420);
+	gluOrtho2D(-780, 780, -420, 420);
 }
 
 void display4()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	float x0=0,y0=0,r=100;
-	float p,x,y;
-	x=0;y=r;
+	float x0 = 0, y0 = 0, r = 100;
+	float p, x, y;
+	x = 0; y = r;
 
-	p=1-r;
+	p = 1 - r;
 
 	glBegin(GL_POINTS);
-			glColor3f(1,1,0);
-			glVertex2f(x,y);
-			glVertex2f(x,-y);
-			glVertex2f(-x,y);
-			glVertex2f(-x,-y);
-			glVertex2f(y,x);
-			glVertex2f(y,-x);
-			glVertex2f(-y,x);
-			glVertex2f(-y,-x);
+	glColor3f(1, 1, 0);
+	glVertex2f(x, y);
+	glVertex2f(x, -y);
+	glVertex2f(-x, y);
+	glVertex2f(-x, -y);
+	glVertex2f(y, x);
+	glVertex2f(y, -x);
+	glVertex2f(-y, x);
+	glVertex2f(-y, -x);
 
-	while(x<=y)
-		if(p<0)
+	while (x <= y)
+		if (p<0)
 		{
 			x++;
-			glColor3f(1,1,0);
-			glVertex2f(x,y);
-			glVertex2f(x,-y);
-			glVertex2f(-x,y);
-			glVertex2f(-x,-y);
-			glVertex2f(y,x);
-			glVertex2f(y,-x);
-			glVertex2f(-y,x);
-			glVertex2f(-y,-x);
-			p+=2*x+3;
+			glColor3f(1, 1, 0);
+			glVertex2f(x, y);
+			glVertex2f(x, -y);
+			glVertex2f(-x, y);
+			glVertex2f(-x, -y);
+			glVertex2f(y, x);
+			glVertex2f(y, -x);
+			glVertex2f(-y, x);
+			glVertex2f(-y, -x);
+			p += 2 * x + 3;
 		}
 
 		else
 		{
-			x++;y--;
-			glColor3f(0,1,0);
-			glVertex2f(x,y);
-			glVertex2f(x,-y);
-			glVertex2f(-x,y);
-			glVertex2f(-x,-y);
-			glVertex2f(y,x);
-			glVertex2f(y,-x);
-			glVertex2f(-y,x);
-			glVertex2f(-y,-x);
-			p+=2*x-2*y+5;
+			x++; y--;
+			glColor3f(0, 1, 0);
+			glVertex2f(x, y);
+			glVertex2f(x, -y);
+			glVertex2f(-x, y);
+			glVertex2f(-x, -y);
+			glVertex2f(y, x);
+			glVertex2f(y, -x);
+			glVertex2f(-y, x);
+			glVertex2f(-y, -x);
+			p += 2 * x - 2 * y + 5;
 		}
 
-		for(int i=-500;i<=500;i++)
+	for (int i = -500; i <= 500; i++)
 	{
-		glColor3f(1,0,1);
-		glVertex2f(i,0);
-		glVertex2f(0,i);
-	}	
-		glEnd();
-		glFlush();
+		glColor3f(1, 0, 1);
+		glVertex2f(i, 0);
+		glVertex2f(0, i);
+	}
+	glEnd();
+	glFlush();
 }
 
 void display3()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	float x0=0,y0=0,x1=50,y1=140,p,i;
-	cout<<"Enter the starting and ending coordinates:\n";
-	cin>>x0>>y0>>x1>>y1;
-	if(x0>x1)
+	float x0 = 0, y0 = 0, x1 = 50, y1 = 140, p, i;
+	cout << "Enter the starting and ending coordinates:\n";
+	cin >> x0 >> y0 >> x1 >> y1;
+	if (x0>x1)
 	{
-		swap(x0,x1);
-		swap(y0,y1);
+		swap(x0, x1);
+		swap(y0, y1);
 	}
-	float dx,dy;
-	float x=x0,y=y0;
-	dx=x1-x0;
-	dy=y1-y0;
-	if(abs(dx)>abs(dy))
-		i=abs(dx);
-	else i=abs(dy);
+	float dx, dy;
+	float x = x0, y = y0;
+	dx = x1 - x0;
+	dy = y1 - y0;
+	if (abs(dx)>abs(dy))
+		i = abs(dx);
+	else i = abs(dy);
 
 	glBegin(GL_POINTS);
 
-	if(abs(dy)>abs(dx))
+	if (abs(dy)>abs(dx))
 	{
-		
-		p=2*dx-dy;
-		glColor3f(1,1,0);
-		glVertex2f(x,y);
-		if(y0<y1)
-		{
-			for(int j=0;j<=i;j++)
-			if(p<0)
-			{
-				y++;
-				glColor3f(1,1,0);
-				glVertex2f(x,y);
-				p+=2*dx;
-			}
 
-			else
-			{
-				x++;y++;
-				glColor3f(0,1,0);
-				glVertex2f(x,y);
-				p+=2*dx-2*dy;
-			}
+		p = 2 * dx - dy;
+		glColor3f(1, 1, 0);
+		glVertex2f(x, y);
+		if (y0<y1)
+		{
+			for (int j = 0; j <= i; j++)
+				if (p<0)
+				{
+					y++;
+					glColor3f(1, 1, 0);
+					glVertex2f(x, y);
+					p += 2 * dx;
+				}
+
+				else
+				{
+					x++; y++;
+					glColor3f(0, 1, 0);
+					glVertex2f(x, y);
+					p += 2 * dx - 2 * dy;
+				}
 		}
 		else
-			for(int j=0;j<=i;j++)
-		if(p<0)
-		{
-			y--;
-			glColor3f(1,1,0);
-			glVertex2f(x,y);
-			p+=2*dx;
-		}
+			for (int j = 0; j <= i; j++)
+				if (p<0)
+				{
+					y--;
+					glColor3f(1, 1, 0);
+					glVertex2f(x, y);
+					p += 2 * dx;
+				}
 
-		else
-		{
-			x++;y--;
-			glColor3f(0,1,0);
-			glVertex2f(x,y);
-			p+=2*dx-2*dy;
-		}
-		
+				else
+				{
+					x++; y--;
+					glColor3f(0, 1, 0);
+					glVertex2f(x, y);
+					p += 2 * dx - 2 * dy;
+				}
+
 	}
 
 	else
 	{
-		p=2*dy-dx;
-		glColor3f(1,1,0);
-		glVertex2f(x,y);
+		p = 2 * dy - dx;
+		glColor3f(1, 1, 0);
+		glVertex2f(x, y);
 
-		if(y0<y1){
-		for(int j=0;j<=i;j++)
-		if(p<0)
-		{
-			x++;
-			glColor3f(1,1,0);
-			glVertex2f(x,y);
-			p+=2*dy;
+		if (y0<y1) {
+			for (int j = 0; j <= i; j++)
+				if (p<0)
+				{
+					x++;
+					glColor3f(1, 1, 0);
+					glVertex2f(x, y);
+					p += 2 * dy;
+				}
+
+				else
+				{
+					x++; y++;
+					glColor3f(0, 1, 0);
+					glVertex2f(x, y);
+					p += 2 * dy - 2 * dx;
+				}
 		}
 
-		else
-		{
-			x++;y++;
-			glColor3f(0,1,0);
-			glVertex2f(x,y);
-			p+=2*dy-2*dx;
-		}
-	    }
+		else {
+			for (int j = 0; j <= i; j++)
+				if (p<0)
+				{
+					x++;
+					glColor3f(1, 1, 0);
+					glVertex2f(x, y);
+					p += 2 * dy;
+				}
 
-		else{
-			for(int j=0;j<=i;j++)
-		if(p<0)
-		{
-			x++;
-			glColor3f(1,1,0);
-			glVertex2f(x,y);
-			p+=2*dy;
-		}
-
-		else
-		{
-			x++;y--;
-			glColor3f(0,1,0);
-			glVertex2f(x,y);
-			p+=2*dy-2*dx;
-		}
+				else
+				{
+					x++; y--;
+					glColor3f(0, 1, 0);
+					glVertex2f(x, y);
+					p += 2 * dy - 2 * dx;
+				}
 		}
 	}
 
-	
 
-	for(int i=-500;i<=500;i++)
+
+	for (int i = -500; i <= 500; i++)
 	{
-		glColor3f(1,0,1);
-		glVertex2f(i,0);
-		glVertex2f(0,i);
-	}	
-		glEnd();
-		glFlush();
+		glColor3f(1, 0, 1);
+		glVertex2f(i, 0);
+		glVertex2f(0, i);
+	}
+	glEnd();
+	glFlush();
 }
 
 void display2()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	float x0=0,y0=0,x1=150,y1=90,i;
-	cout<<"Enter the starting and ending coordinates:\n";
-	cin>>x0>>y0>>x1>>y1;
-	float dx,dy,xincr,yincr;
-	if(x0>x1)
+	float x0 = 0, y0 = 0, x1 = 150, y1 = 90, i;
+	cout << "Enter the starting and ending coordinates:\n";
+	cin >> x0 >> y0 >> x1 >> y1;
+	float dx, dy, xincr, yincr;
+	if (x0>x1)
 	{
-		swap(x0,x1);
-		swap(y0,y1);
+		swap(x0, x1);
+		swap(y0, y1);
 	}
-	float x=x0,y=y0;
-	dx=x1-x0;
-	dy=y1-y0;
-	cout<<dx<<" "<<dy<<endl;
-	if(abs(dx)>abs(dy))
-		i=abs(dx);
-	else i=abs(dy);
+	float x = x0, y = y0;
+	dx = x1 - x0;
+	dy = y1 - y0;
+	cout << dx << " " << dy << endl;
+	if (abs(dx)>abs(dy))
+		i = abs(dx);
+	else i = abs(dy);
 
-	xincr=abs(dx)/i;
-	yincr=abs(dy)/i;
+	xincr = abs(dx) / i;
+	yincr = abs(dy) / i;
 	glBegin(GL_POINTS);
 
-	for(int i=-500;i<=500;i++)
+	for (int i = -500; i <= 500; i++)
 	{
-		glColor3f(1,0,1);
-		glVertex2f(i,0);
-		glVertex2f(0,i);
-	}	
+		glColor3f(1, 0, 1);
+		glVertex2f(i, 0);
+		glVertex2f(0, i);
+	}
 
-	if(dy>0)
-	for(int j=0;j<=i;j++)
-	{
-		glColor3f(0,1,0);
-		glVertex2f(x,y);
-		x+=xincr;
-		y+=yincr;			
-	}
+	if (dy>0)
+		for (int j = 0; j <= i; j++)
+		{
+			glColor3f(0, 1, 0);
+			glVertex2f(x, y);
+			x += xincr;
+			y += yincr;
+		}
 	else
-	for(int j=0;j<=i;j++)
-	{
-		glColor3f(0,1,0);
-		glVertex2f(x,y);
-		x+=xincr;
-		y-=yincr;			
-	}
+		for (int j = 0; j <= i; j++)
+		{
+			glColor3f(0, 1, 0);
+			glVertex2f(x, y);
+			x += xincr;
+			y -= yincr;
+		}
 	glEnd();
 	glFlush();
-	
+
 }
 
 int main(int argc, char* argv[]) {
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowPosition(0,0);
+	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Mid Point circle drawing algorithm");
+	glutCreateWindow("Bresenham's line drawing algorithm");
 	myInit();
-	//glutReshapeFunc(changeViewPort);
 	glutDisplayFunc(display2);
-
-	// Very important!  This initializes the entry points in the OpenGL driver so we can 
-	// call all the functions in the API.
-	/*GLenum err = glewInit();
-	if (GLEW_OK != err) {
-		fprintf(stderr, "GLEW error");
-		return 1;
-	}*/
-
-
 	glutMainLoop();
 	return 0;
 }

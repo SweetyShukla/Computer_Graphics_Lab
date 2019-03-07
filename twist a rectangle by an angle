@@ -1,0 +1,148 @@
+#if 1
+#include <windows.h>
+#include <GL\glew.h>
+#include <GL\freeglut.h>
+#include <iostream>
+#include<math.h>
+#include <stdio.h>
+#define pi 3.142857
+
+using namespace std;
+
+void changeViewPort(int w, int h)
+{
+	glViewport(0, 0, w, h);
+}
+
+void render()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glutSwapBuffers();
+}
+
+void myInit(void)
+{
+	glClearColor(0, 0, 0, 1);
+	glColor3f(1, 1, 0);
+
+	glPointSize(2.0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	gluOrtho2D(-780, 780, -420, 420);
+}
+
+float result[3] = { 0,0,0 };
+void mul(float ar1[][3], float ar2[3])
+{
+	for (int i = 0; i<3; i++)
+		for (int j = 0; j<3; j++)
+		{
+			result[i] += ar1[i][j] * ar2[j];
+		}
+}
+void display2()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+	float x0 = -500, y0 = -500, x1 = 500, y1 = 500, i;
+	float dx, dy, xincr, yincr;
+	if (x0>x1)
+	{
+		swap(x0, x1);
+		swap(y0, y1);
+	}
+	float x = x0, y = y0;
+	dx = x1 - x0;
+	dy = y1 - y0;
+	cout << dx << " " << dy << endl;
+	if (abs(dx)>abs(dy))
+		i = abs(dx);
+	else i = abs(dy);
+
+	xincr = abs(dx) / i;
+	yincr = abs(dy) / i;
+	glBegin(GL_POINTS);
+
+	for (int i = -500; i <= 500; i++)
+	{
+		glColor3f(1, 0, 0);
+		glVertex2f(i, 0);
+		glVertex2f(0, i);
+	}
+
+	glEnd();
+	glFlush();
+
+}
+void rotation(float x, float y);
+void rectangle()
+{
+	float x1, y1, x2, y2;
+	x1 = -50; y1 = 50;
+	x2 = 50; y2 = -50;
+	display2();
+	glBegin(GL_POINTS);
+	glColor3f(1, 1, 0);
+	for (float i = y1; i >= y2; i--)
+		for (float j = x1; j <= x2; j++)
+		{
+			if ((j>-50 && j<-30) || (j>-10 && j<10) || (j>30 && j<50))
+				glColor3f(1, 0, 0);
+			else glColor3f(1, 1, 1);
+			glVertex2f(j, i);
+		}
+	for (float i = y1; i >= y2; i--)
+		for (float j = x1; j <= x2; j++)
+		{
+			//draw(j,i);
+			rotation(j, i);
+		}
+	for (int i = -500; i <= 500; i++)
+	{
+		glColor3f(1, 0, 0);
+		glVertex2f(i, 0);
+		glVertex2f(0, i);
+	}
+	glEnd();
+	glFlush();
+}
+
+void rotation(float x, float y)
+{
+	float in[3] = { x,y,1 };
+	float t = sqrt(x*x + y*y);
+	float d = 50 * 1.414;
+	float th = pi / 6 * 10;
+	float c = cos((t / d)*th);
+	float s = sin((t / d)*th);
+	float rot[3][3] = { { c,s,0 },{ -s,c,0 },{ 1,1,1 } };
+	float res[3];
+	mul(rot, in);
+	for (int i = 0; i<3; i++)
+	{
+		res[i] = result[i];
+		result[i] = 0;
+	}
+	glBegin(GL_POINTS);
+	if ((y>-50 && y<-30) || (y>-10 && y<10) || (y>30 && y<50))
+		glColor3f(1, 0, 0);
+	else glColor3f(1, 1, 1);
+	glVertex2f(res[0], res[1]);
+	glEnd();
+	glFlush();
+}
+
+
+int main(int argc, char* argv[]) {
+
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+	glutInitWindowPosition(0, 0);
+	glutInitWindowSize(1500, 800);
+	glutCreateWindow("Twist by factor t");
+	myInit();
+	glutDisplayFunc(rectangle);
+	glutMainLoop();
+	return 0;
+}
+#endif

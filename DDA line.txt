@@ -1,84 +1,83 @@
 //Digital Differential Analyzer line drawing algorithm
-
-#include <stdio.h>
+#if 1
+#include <Windows.h>
+#include<stdio.h>
+#include <GL\glew.h>
+#include <GL\freeglut.h>
 #include <math.h>
-#include <GL/glut.h>
-
+#include <iostream>
+using namespace std;
 double X1, Y1, X2, Y2;
 
 float round_value(float v)
 {
-  return floor(v + 0.5);
+	return floor(v + 0.5);
 }
 
 void LineDDA(void)
 {
-  double dx=(X2-X1);
-  double dy=(Y2-Y1);
-  double slope=(abs(dx)/abs(dy));
-  float  x=X1,y=Y1;
-  /* Clears buffers to preset values */
-  glClear(GL_COLOR_BUFFER_BIT);
-  /* Plot the points */
-  glBegin(GL_POINTS);
-  /* Plot the first point */
-  glVertex2d(x,y);
+	double dx = (X2 - X1);
+	double dy = (Y2 - Y1);
+	double slope = (abs(dx) / abs(dy));
+	float  x = X1, y = Y1;
+	/* Clears buffers to preset values */
+	glClear(GL_COLOR_BUFFER_BIT);
+	/* Plot the points */
+	glBegin(GL_POINTS);
+	/* Plot the first point */
+	glVertex2d(x, y);
 
-  /* if slope < 1 */
-  if(slope<1){
-        for(x=0;x<abs(dx);x++)
-        {
-                y+=slope;
-                glVertex2d(round_value(x), round_value(y));
-        }
-  }
+	/* if slope < 1 */
+	if (slope<1) {
+		for (x = 0; x<abs(dx); x++)
+		{
+			y += slope;
+			glVertex2d(round_value(x), round_value(y));
+		}
+	}
 
-  /*if slope >= 1 */
-  else{
-        for(y=0;y<abs(dy);y++)
-        {
-                x+=slope;
-                glVertex2d(round_value(x), round_value(y));
-        }
-  }
-  glEnd();
+	/*if slope >= 1 */
+	else {
+		for (y = 0; y<abs(dy); y++)
+		{
+			x += slope;
+			glVertex2d(round_value(x), round_value(y));
+		}
+	}
+	glEnd();
 
-  glFlush();
+	glFlush();
 }
 void Init()
 {
-  /* Set clear color to white */
-  glClearColor(1.0,1.0,1.0,0);
-  /* Set fill color to black */
-  glColor3f(0.0,0.0,0.0);
-  /* glViewport(0 , 0 , 640 , 480); */
-  /* glMatrixMode(GL_PROJECTION); */
-  /* glLoadIdentity(); */
-  gluOrtho2D(0 , 640 , 0 , 480);
+	/* Set clear color to white */
+	glClearColor(1.0, 1.0, 1.0, 0);
+	/* Set fill color to black */
+	glColor3f(0.0, 0.0, 0.0);
+	/* glViewport(0 , 0 , 640 , 480); */
+	/* glMatrixMode(GL_PROJECTION); */
+	/* glLoadIdentity(); */
+	gluOrtho2D(0, 640, 0, 480);
 }
 void main(int argc, char **argv)
 {
-  printf("Enter two end points of the line to be drawn:\n");
-  printf("\n************************************");
-  printf("\nEnter Point1( X1 , Y1):\n");
-  scanf("%lf%lf",&X1,&Y1);
-  printf("\n************************************");
-  printf("\nEnter Point1( X2 , Y2):\n");
-  scanf("%lf%lf",&X2,&Y2);
-  
-  /* Initialise GLUT library */
-  glutInit(&argc,argv);
-  /* Set the initial display mode */
-  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-  /* Set the initial window position and size */
-  glutInitWindowPosition(0,0);
-  glutInitWindowSize(500,500);
-  /* Create the window with title "DDA_Line" */
-  glutCreateWindow("DDA_Line");
-  /* Initialize drawing colors */
-  Init();
-  /* Call the displaying function */
-  glutDisplayFunc(LineDDA);
-  /* Keep displaying untill the program is closed */
-  glutMainLoop();
+	cout << "Enter x1, y1, x2 ,y2 values";
+	cin >> X1 >> Y1 >> X2 >> Y2;
+
+	/* Initialise GLUT library */
+	glutInit(&argc, argv);
+	/* Set the initial display mode */
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+	/* Set the initial window position and size */
+	glutInitWindowPosition(0, 0);
+	glutInitWindowSize(500, 500);
+	/* Create the window with title "DDA_Line" */
+	glutCreateWindow("DDA_Line");
+	/* Initialize drawing colors */
+	Init();
+	/* Call the displaying function */
+	glutDisplayFunc(LineDDA);
+	/* Keep displaying untill the program is closed */
+	glutMainLoop();
 }
+#endif

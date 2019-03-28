@@ -1,0 +1,52 @@
+#if 0
+//Hermite curve 3D
+#include <gl/glut.h>
+#include <stdio.h>
+float x1, y1, z1, x2, y2, z2, x_1, y_1, z_1, x_2, y_2, z_2;
+void myInit(void)
+{
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glOrtho(-50.0, 50.0, -50.0, 50.0, -50.0, 50.0);
+}
+void draw_pixel(float x, float y, float z) {
+	glColor3f(0, 1, 0.5);
+	glBegin(GL_POINTS);
+	glVertex3f(x, y, z);
+	glEnd();
+}
+void draw_curve() {
+	float u, x, y, z;
+	draw_pixel(x1, y1, z1);
+	draw_pixel(x2, y2, z2);
+	float f1, f2, f3, f4;
+	for (u = 0.0; u<=1; u += 0.001)
+	{
+		f1 = (2 * u * u * u - 3 * u * u + 1);
+		f2 = (-2 * u * u * u + 3 * u * u);
+		f3 = (u * u * u - 2 * u * u + u);
+		f4 = (u * u * u - u * u);
+		x = f1 * x1 + f2 * x2 + f3 * x_1 + f4 * x_2;
+		y = f1 * y1 + f2 * y2 + f3 * y_1 + f4 * y_2;
+		z = f1 * z1 + f2 * z2 + f3 * z_1 + f4 * z_2;
+		draw_pixel(x, y, z);
+	}
+
+	}
+void myDisplay() {
+	draw_curve();
+	glFlush();
+}
+void main(int argc, char **argv) {
+
+	printf("Enter the values of x1, y1, z1, x2, y2, z2, x1',y1',z1', x2',y2', z2'\n");
+	scanf_s("%f %f %f %f %f %f %f %f %f %f %f %f", &x1, &y1, &z1, &x2, &y2, &z2, &x_1, &y_1,&z_1, &x_2, &y_2, &z_2);
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+	glutInitWindowSize(500, 500);
+	glutInitWindowPosition(0, 0);
+	glutCreateWindow("Hermite Curve 3D");
+	myInit();
+	glutDisplayFunc(myDisplay);
+	glutMainLoop();
+}
+#endif
